@@ -70,11 +70,6 @@
 <input type="file" accept="image/*" capture="environment" id="scanButton" style="display:none;">
 <button id="scanButton" onclick="openScanner()">skaner</button>
 
-    <!-- Skaner kodów kreskowych -->
-<div id="scanner-container">
-    <video id="preview" style="width: 100%;"></video>
-</div>
-
 <input type="text" id="searchInput" placeholder="Wprowadź dane">
 <button id="searchButton" onclick="searchData()">Wyszukaj</button>
 
@@ -82,41 +77,7 @@
 
 <div id="resultContainer"></div>
     <script src="https://cdn.rawgit.com/serratus/quaggaJS/0.12.1/dist/quagga.min.js"></script>
-<script>
-    function openScanner() {
-        document.getElementById('scanButton').click();
-    }
-
-    // Konfiguracja QuaggaJS
-    Quagga.init({
-        inputStream: {
-            name: "Live",
-            type: "LiveStream",
-            target: document.querySelector('#preview'),
-            constraints: {
-                width: 600,
-                height: 400,
-                facingMode: "environment" // Wykorzystanie kamery z tyłu urządzenia
-            },
-        },
-        decoder: {
-            readers: ["ean_reader"]
-        }
-    }, function (err) {
-        if (err) {
-            console.error(err);
-            return;
-        }
-        Quagga.start();
-    });
-
-    // Obsługa zdarzenia rozpoznania kodu kreskowego
-    Quagga.onDetected(function (result) {
-        var code = result.codeResult.code;
-        document.getElementById('resultContainer').innerHTML = '<p>Znaleziono kod: ' + code + '</p>';
-        Quagga.stop();
-    });
-
+   
 <script>
      function searchData() {
         var searchInput = document.getElementById('searchInput').value;
