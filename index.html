@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wyszukiwarka planogramów</title>
+    <title>Wyszukiwarka planogramów LM Serbska</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,10 +24,6 @@
         }
         button#searchButton {
             background-color: green; /* Zmiana koloru przycisku "Wyszukaj" na zielony */
-            color: white;
-        }
-        button#scanButton {
-            background-color: blue; /* Zmiana koloru przycisku "skaner" na niebieski */
             color: white;
         }
         table {
@@ -57,29 +53,34 @@
          /* Media query dla mniejszych ekranów (np. telefony) */
         @media (max-width: 768px) {
             table {
-                width: 90%; /* Zmiana szerokości tabeli na 90% dla mnie
+                width: 90%; /* Zmiana szerokości tabeli na 90% dla mniejszych ekranów */
             }
         }
     </style>
 </head>
 <body>
 
-<h2>Wyszukiwarka planogramów</h2>
+<h2>Wyszukiwarka planogramów LM Serbska</h2>
 
-<!-- Przycisk do uruchamiania skanera -->
-<input type="file" accept="image/*" capture="environment" id="scanButton" style="display:none;">
-<button id="scanButton" onclick="openScanner()">skaner</button>
-
+<!-- Usunięcie przycisku skanera -->
 <input type="text" id="searchInput" placeholder="Wprowadź dane">
 <button id="searchButton" onclick="searchData()">Wyszukaj</button>
 
 <h3>Wyniki wyszukiwania:</h3>
 
 <div id="resultContainer"></div>
-    <script src="https://cdn.rawgit.com/serratus/quaggaJS/0.12.1/dist/quagga.min.js"></script>
-   
+<script src="https://cdn.rawgit.com/serratus/quaggaJS/0.12.1/dist/quagga.min.js"></script>
 <script>
-     function searchData() {
+    document.getElementById('searchInput').addEventListener('input', function() {
+        var inputValue = this.value.trim();
+
+        // Sprawdź, czy wprowadzony kod ma długość 13 (EAN-13)
+        if (inputValue.length === 13) {
+            searchData(); // Automatyczne uruchomienie wyszukiwania
+        }
+    });
+
+    function searchData() {
         var searchInput = document.getElementById('searchInput').value;
 
         // Sprawdzenie, czy podano dane do wyszukania
@@ -150,10 +151,6 @@
                 // Obsługa błędu i wyświetlanie powiadomienia
                 resultContainer.innerHTML = `<p class="error-message">Błąd: ${error.message}</p>`;
             });
-    }
-
-    function openScanner() {
-        document.getElementById('scanButton').click();
     }
 </script>
 
